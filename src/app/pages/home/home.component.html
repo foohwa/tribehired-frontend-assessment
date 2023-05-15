@@ -1,0 +1,8 @@
+<h1 class="page-title">Placeholder Post</h1>
+<span class="instruction">Click on any post to view more detail</span>
+<div class="wrapper">
+  <div class="container" *ngFor="let post of posts$ | async" [routerLink]="['post', post.id]">
+    <h2 class="title">{{ post.title }}</h2>
+    <p class="body">{{ post.body }}</p>
+  </div>
+</div>
