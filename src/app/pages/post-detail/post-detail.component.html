@@ -1,0 +1,32 @@
+<button class="back-button" (click)="navigateBack()">&#11013; Return to homepage</button>
+
+<section class="post-detail" *ngIf="post$ | async as post">
+  <p class="post-number">Post #{{ post.id }}</p>
+  <div class="box" >
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.body }}</p>
+  </div>
+</section>
+
+<section class="comment-section" *ngIf="comments$ | async as comments">
+  <ng-container *ngIf="filteredComments$ | async as filteredComments; else loading">
+    <div class="header">
+      <h2>Comments ({{ comments.length }})</h2>
+      <input class="search-bar" [formControl]="searchQueryControl" placeholder="Search by name, email or body"/>
+    </div>
+    <div class="result-found" *ngIf="comments.length !== filteredComments.length">Result found: {{ filteredComments.length }}</div>
+    <ng-container *ngFor="let comment of filteredComments; index as i">
+      <div class="comment-box">
+        <img class="avatar" alt="avatar" ngSrc="https://ui-avatars.com/api/?name={{ comment.email }}&background=random"
+             width="40" height="40">
+        <div class="box" style="width: 100%">
+          <h2 class="title">{{ comment.name }}</h2>
+          <div class="email">{{ comment.email }}</div>
+          <div>{{ comment.body }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</section>
+
+<ng-template #loading>Loading comment...</ng-template>
